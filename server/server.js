@@ -6,8 +6,14 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
 const messages = [];
+
+let clients = [];
+
 wss.on("connection", (ws) => {
   console.log("Client connected");
+
+  clients.push(ws);
+
   ws.once("open", () => {
     console.log("Connected to websocket");
     ws.send(JSON.stringify({ type: "join", data: messages }));
@@ -23,6 +29,17 @@ wss.on("connection", (ws) => {
         client.send(JSON.stringify({ message }));
       }
     });
+  });
+
+  ws.on("message", (messageString) => {
+    const data = JSON.parse(messageString);
+    if (data.type === "DRAW") {
+      clients.forEach((client) => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(data));
+        }
+      });
+    }
   });
 
   ws.on("close", () => {

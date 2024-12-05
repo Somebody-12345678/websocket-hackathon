@@ -9,7 +9,7 @@ const DrawingApp = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
 
-  const { websocket } = useWebSocket('wss://your-websocket-url', setLines);
+  const { websocket } = useWebSocket('ws://localhost:8080/', setLines);
 
   useEffect(() => {
     const canvas = canvasRef.current;
