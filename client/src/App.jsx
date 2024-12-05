@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import useWebSocket from "./useWebsocket";
+import useWebSocket from "./useWebSocket";
+import DrawingApp from "./DrawingApp";
 
 function App() {
   const [data, setData] = useState([]);
@@ -12,7 +13,17 @@ function App() {
 
   return (
     <>
-      <h1>Websocket Chat</h1>
+      <section>
+        <h1>theLounge</h1>
+      </section>
+
+      <section>
+        <div>
+          <DrawingApp />
+        </div>
+      </section>
+
+    <section>
       <button onClick={reconnect}>Reconnect</button>
       <div>
         <ul>
@@ -41,6 +52,7 @@ function App() {
           Send
         </button>
       </div>
+      </section>
     </>
   );
 }
