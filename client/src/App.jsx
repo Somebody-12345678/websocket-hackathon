@@ -39,6 +39,7 @@ function App() {
             if (e.key === "Enter") {
               websocket.send(
                 JSON.stringify({
+                  type: 'MSG',
                   message: message,
                 })
               );
