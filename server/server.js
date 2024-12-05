@@ -1,9 +1,10 @@
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
-
+require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
+const port = process.env.PORT || 8080;
 const wss = new WebSocket.Server({ server: server });
 const messages = [];
 wss.on("connection", (ws) => {
@@ -37,6 +38,6 @@ wss.on("connection", (ws) => {
   ws.send(JSON.stringify({ message: "Hello from server" }));
 });
 
-server.listen(8080, () => {
+server.listen(port, () => {
   console.log("Server started on http://localhost:8080");
 });
