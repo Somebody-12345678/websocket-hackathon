@@ -22,13 +22,15 @@ wss.on("connection", (ws) => {
     console.log("Message received", messageString);
     const json = JSON.parse(messageString);
     const { message } = json;
-    messages.push({ message });
+    if (json.type === "MSG") {
+      messages.push({ message });
 
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify({ message }));
-      }
-    });
+      wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify({ message }));
+        }
+      });
+    }
   });
 
   ws.on("message", (messageString) => {
